@@ -5,7 +5,15 @@ const bodyParser = require('body-parser')
 
 const port = 3000
 
-
+//conection with MongoDB
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://SIT_725:1986@cluster0.rdylz.mongodb.net/CSAMS_F&K?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
 // view engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
