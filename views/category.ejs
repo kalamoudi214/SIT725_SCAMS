@@ -1,0 +1,77 @@
+<%- include ('./partials/head.ejs') %>
+    <!-- Embedded Javascreipt -->
+    <title>Category</title>
+    
+</head>
+<body>
+  <%- include ('./partials/mainNav.ejs') %>
+
+   <h1 style="text-align: center; margin:30px 0px">Category</h1>
+  <div class="tab">
+    <button class="tablinks" onclick="tapChange(event, 'view')">View Category</button>
+    <button class="tablinks" onclick="tapChange(event, 'create')">Create Category</button>
+    
+  </div>
+
+<%if(data.success)
+{
+    console.log('data',data) %>
+    <p  style="margin-top: 20px;"  id="msg" class="alert alert-success"><%=data.success%></p>
+<% }%>
+<%if(data.error)
+{
+    console.log('data',data) %>
+    <p  style="margin-top: 20px;"  id="msg" class="alert alert-danger"><%=data.error%></p>
+<% }%>
+  <div id="view" class="tabcontent">
+    <h3>Category list will be shown here</h3>
+    
+  </div>
+  
+  <div id="create" class="tabcontent">
+    <div class="registration-section"><h2 style="text-align: center;">Create Category</h2></div>
+    <div class="jumbotron registration-section">
+      <form action="/category/create" method="post">
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp"
+            placeholder="Enter Category name">
+          
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input  name="description" type="text-area" class="form-control"  placeholder="Enter description">
+        </div>
+        
+        <button type="submit"  class="btn btn-primary">Submit</button>
+        <!-- <%
+        if(data.error)
+        { %>
+            <p  style="margin-top: 20px;" class="alert alert-danger"><%=data.error%></p>
+       <% }%> -->
+      </form>
+
+      
+    </div>
+  </div>
+  
+
+  
+  <script>
+  function tapChange(evt, tabChangeName) {
+      $('#msg').css('display','none')
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabChangeName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  </script>
+</body>
+</html>

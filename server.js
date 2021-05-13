@@ -4,7 +4,10 @@ const path = require('path')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 //const userRoute = require('./routes/userRouter');
-const departmentRoute= require('./routes/departmentRouter')
+const departmentRoute= require('./routes/departmentRouter');
+const categoryRoute= require('./routes/categoryRouter')
+
+
 const mongoose = require("mongoose");
 const port = 3000
 
@@ -40,7 +43,7 @@ app.use(bodyParser.urlencoded({
 // Routes ----------------------------------------------
 app.use('/', require('./routes/pages'))
 app.use('/department',departmentRoute )
-
+app.use('/category',categoryRouter )
 app.get('/department',async (req,res)=>{
  
     res.render('department.ejs',{data:{}})
