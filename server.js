@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const userRoute = require('./routes/userRouter');
 const categoryRoute = require('./routes/categoryRouter')
 const departmentRoute= require('./routes/departmentRouter')
+const materialRoute= require('./routes/material')
 const departmentModel = require('./models/department');
 const categoryModel = require('./models/category');
 const userModel = require('./models/user')
@@ -57,10 +58,19 @@ app.get('/department',async (req,res)=>{
     
     res.render('department.ejs',{data:{department:dep}})
 })
+
+
 app.get('/category',async (req,res)=>{
     let category = await categoryModel.find().lean();
     res.render('category.ejs',{data:{category: category}})
 })
+
+app.get('/material',async (req,res)=>{
+    let category = await categoryModel.find().lean();
+    res.render('category.ejs',{data:{category: category}})
+})
+
+
 
 app.get('/user',async (req,res)=>{
     let users = await userModel.find().lean();
