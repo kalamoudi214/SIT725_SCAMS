@@ -3,27 +3,22 @@ const app = express()
 const path = require('path')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-//const userRoute = require('./routes/userRouter');
-const departmentRoute= require('./routes/departmentRouter');
-const categoryRoute= require('./routes/categoryRouter')
-
+const userRoute = require('./routes/userRouter');
+const categoryRoute = require('./routes/categoryRouter')
+const departmentRoute= require('./routes/departmentRouter')
+const departmentModel = require('./models/department');
+const categoryModel = require('./models/category');
+const userModel = require('./models/user')
 
 const mongoose = require("mongoose");
 const port = 3000
+
 
 // view engine setup
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 
-// uri = "mongodb+srv://SIT_725:1986@cluster0.tn3yg.mongodb.net/CSAMS_F&K?retryWrites=true&w=majority";
-// mongoose.connect(uri, {
-//     useUnifiedTopology: true,
-//     useNewUrlParser: true,
-//     useFindAndModify: false,
-//   }).catch(e => {
-//     console.log(e);
-//   })
 uri = "mongodb+srv://cyber:1988@cluster0.rdylz.mongodb.net/CSAMS_F&K?retryWrites=true&w=majority";
 mongoose.connect(uri, {
     useUnifiedTopology: true,
@@ -42,16 +37,36 @@ app.use(bodyParser.urlencoded({
 
 // Routes ----------------------------------------------
 app.use('/', require('./routes/pages'))
+app.use('/user',userRoute)
 app.use('/department',departmentRoute )
-app.use('/category',categoryRouter )
-app.get('/department',async (req,res)=>{
- 
-    res.render('department.ejs',{data:{}})
+app.use('/category',categoryRoute)
+app.get('/sign-up',async (req,res)=>{
+    let dep = await departmentModel.find().lean();
+    console.log(dep)
+    res.render('registration.ejs',{data:{department:dep}})
 })
-app.get('/category',async (req,res)=>{
-    res.render('category.ejs',{data:{}})
+app.get('/Login',async (req,res)=>{
+    res.render('login.ejs',{data:{}})
+})
+app.get('/home',async (req,res)=>{
+    res.render('home.ejs')
 })
 
+app.get('/department',async (req,res)=>{
+    let dep = await departmentModel.find().lean();
+    
+    res.render('department.ejs',{data:{department:dep}})
+})
+app.get('/category',async (req,res)=>{
+    let category = await categoryModel.find().lean();
+    res.render('category.ejs',{data:{category: category}})
+})
+
+app.get('/user',async (req,res)=>{
+    let users = await userModel.find().lean();
+    
+    res.render('users.ejs',{data:{user:users}})
+})
 
 
 

@@ -1,0 +1,25 @@
+<%- include ('./partials/head.ejs') %>
+    <!-- Embedded Javascreipt -->
+    <title>HomePage</title>
+
+    <script>
+      if(!localStorage.getItem('csams'))
+      {
+        window.location.href = '/'
+      }
+    </script>
+</head>
+<body>
+  <%- include ('./partials/homeNavbar.ejs') %>
+
+  <div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <img class="img-fluid w-100" class="" src="images/landing.jpg">
+        </div>
+    </div>
+  </div>
+
+</body>
+</html>
+

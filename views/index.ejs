@@ -1,6 +1,13 @@
 <%- include ('./partials/head.ejs') %>
     <!-- Embedded Javascreipt -->
     <title>Index</title>
+
+    <script>
+        if(localStorage.getItem('csams'))
+        {
+          window.location.href = '/home'
+        }
+      </script>
 </head>
 <body>
   <%- include ('./partials/navbar.ejs') %>

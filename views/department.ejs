@@ -1,9 +1,16 @@
 <%- include ('./partials/head.ejs') %>
     <!-- Embedded Javascreipt -->
     <title>Department</title>
+    <script>
+      if(!localStorage.getItem('csams'))
+      {
+        window.location.href = '/'
+      }
+    </script>
+
 </head>
 <body>
-  <%- include ('./partials/mainNav.ejs') %>
+  <%- include ('./partials/homeNavbar.ejs') %>
 
    <h1 style="text-align: center; margin:30px 0px">Department</h1>
   <div class="tab">
@@ -23,7 +30,29 @@
     <p  style="margin-top: 20px;"  id="msg" class="alert alert-danger"><%=data.error%></p>
 <% }%>
   <div id="view" class="tabcontent">
-    <h3>Department list will be shown here</h3>
+    <div class="container">
+    <table class="table table-striped tbl-class">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Department Name</th>
+        </tr>
+      </thead>
+      <tbody>
+    <%  if(data.department.length) 
+    {
+     console.log('department',data) 
+    for(var i=0;i < data.department.length ; i++) { %>
+
+      <tr>
+        <th scope="row"><%= i+1  %></th>
+        <td><%= data.department[i].name %></td>
+      </tr>
+      <% } } %>
+      </tbody>
+    </table>
+  </div>
+
     
   </div>
   
@@ -32,13 +61,13 @@
     <div class="jumbotron registration-section">
       <form action="/department/create" method="post">
         <div class="form-group">
-          <label for="exampleInputEmail1">Name</label>
-          <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp"
+          <label >Name</label>
+          <input type="text" class="form-control" name="name" id="name" 
             placeholder="Enter department name">
           
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Description</label>
+          <label >Description</label>
           <input  name="description" type="text-area" class="form-control"  placeholder="Enter description">
         </div>
         
@@ -57,7 +86,7 @@
 
   
   <script>
-  function tabChange(evt, tabChangeName) {
+  function tabChange(evt, action) {
       $('#msg').css('display','none')
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -68,7 +97,7 @@
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    document.getElementById(tabChangeName).style.display = "block";
+    document.getElementById(action).style.display = "block";
     evt.currentTarget.className += " active";
   }
   </script>

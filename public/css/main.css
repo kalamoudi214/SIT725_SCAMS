@@ -51,23 +51,6 @@ li a:hover {
     color: #fff;
     text-decoration: none;
 }
-
-.registration-section{
-    width:50%;
-    margin: 20px auto;
-}
-@media(max-width:700px){
-    nav{
-        display: block;
-        text-align: center;
-    }
-}
-
-.landing-description
-{
-    hyphens: auto
-}
-
 body {font-family: Arial;}
         
 /* Style the tab */
@@ -105,4 +88,22 @@ body {font-family: Arial;}
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+}
+.tbl-class{
+    margin-top: 30px;
+}
+.registration-section{
+    width:50%;
+    margin: 20px auto;
+}
+@media(max-width:700px){
+    nav{
+        display: block;
+        text-align: center;
+    }
+}
+
+.landing-description
+{
+    hyphens: auto
 }

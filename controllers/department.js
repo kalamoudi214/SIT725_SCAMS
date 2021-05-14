@@ -6,17 +6,18 @@ const createDepartment = async(req,res) => {
     try{
 
         let  data  = req.body;
-        let users = await department.find();
-        let check = users.find(element => element.name === data.name );
+        let initialDepArtment = await department.find().lean();
+        let check = initialDepArtment.find(element => element.name === data.name );
         if(!check)
         {
         let result = await department.create({...data});
-        res.render('department.ejs',{data:{success:'Department Created Successfully'}})
+        let dep = await department.find();
+        res.render('department.ejs',{data:{success:'Department Created Successfully',department:dep}})
        // res.status(200).json({data: result })
         }
        else {
         // res.status(400).json({message: 'Department already exist' })
-        res.render('department.ejs',{data:{error:'Department already exist'}})
+        res.render('department.ejs',{data:{error:'Department already exist',department:initialDepArtment}})
         }
     }
     catch(e)
