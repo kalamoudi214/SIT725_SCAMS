@@ -15,7 +15,7 @@
    <h1 style="text-align: center; margin:30px 0px">Material</h1>
   <div class="tab">
     <button class="tablinks" onclick="tabChange(event, 'view')">View Material</button>
-    <button class="tablinks" onclick="tabChange(event, 'create')">Create Material</button>
+    <button class="tablinks" onclick="tabChange(event, 'create')">Add Material</button>
     
   </div>
 
@@ -30,29 +30,28 @@
     <p  style="margin-top: 20px;"  id="msg" class="alert alert-danger"><%=data.error%></p>
 <% }%>
   <div id="view" class="tabcontent">
-    <h3>Department list will be shown here</h3>
+    <h3>Material list will be shown here</h3>
     
   </div>
   
   <div id="create" class="tabcontent">
-    <div class="registration-section"><h2 style="text-align: center;">Create Department</h2></div>
+    <div class="registration-section"><h2 style="text-align: center;">Add Material</h2></div>
     <div class="jumbotron registration-section">
       <form action="/material/create" method="post" enctype="multipart/form-data">
         <div class="form-group">
-          <label >Name</label>
+          <label >Material Name</label>
           <input type="text" class="form-control" name="name" id="name" 
             placeholder="Enter department name">
         </div>
         <div class="form-group">
-            <label >Material</label>
+            <label >Material File</label>
             <input type="file" class="form-control" name="file" id="file" 
-              placeholder="Enter department name">
+              placeholder="Enter Material name">
             
           </div>
 
           <div class="form-group">
             <label >Category</label>
-            <!-- <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> -->
             <select class="form-select" name="category"  >
               <option selected>Select Category</option>
               <% if(data.category) {

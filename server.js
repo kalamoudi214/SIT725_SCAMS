@@ -6,14 +6,13 @@ const bodyParser = require('body-parser')
 const userRoute = require('./routes/userRouter');
 const categoryRoute = require('./routes/categoryRouter')
 const departmentRoute= require('./routes/departmentRouter')
-const materialRoute= require('./routes/material')
+const materialRouter = require('./routes/materialRoute');
 const departmentModel = require('./models/department');
 const categoryModel = require('./models/category');
 const userModel = require('./models/user')
 
 const mongoose = require("mongoose");
 const port = 3000
-
 
 // view engine setup
 app.set('view engine', 'ejs');
@@ -31,6 +30,7 @@ mongoose.connect(uri, {
  
 // Serve Static Files from /public
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ 
     extended: true
@@ -41,6 +41,7 @@ app.use('/', require('./routes/pages'))
 app.use('/user',userRoute)
 app.use('/department',departmentRoute )
 app.use('/category',categoryRoute)
+app.use('/material',materialRouter)
 app.get('/sign-up',async (req,res)=>{
     let dep = await departmentModel.find().lean();
     console.log(dep)
@@ -58,19 +59,14 @@ app.get('/department',async (req,res)=>{
     
     res.render('department.ejs',{data:{department:dep}})
 })
-
-
 app.get('/category',async (req,res)=>{
     let category = await categoryModel.find().lean();
     res.render('category.ejs',{data:{category: category}})
 })
-
 app.get('/material',async (req,res)=>{
     let category = await categoryModel.find().lean();
-    res.render('category.ejs',{data:{category: category}})
+    res.render('material.ejs',{data:{category: category}})
 })
-
-
 
 app.get('/user',async (req,res)=>{
     let users = await userModel.find().lean();
