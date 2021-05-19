@@ -1,6 +1,7 @@
 <%- include ('./partials/head.ejs') %>
     <!-- Embedded Javascreipt -->
     <title>Department</title>
+     <!--This script tag is used to maintain session using localstorage-->
     <script>
       if(!localStorage.getItem('csams'))
       {
@@ -39,6 +40,8 @@
         </tr>
       </thead>
       <tbody>
+            <!---This code is used to check if there is values in category then render it on browser-->
+
     <%  if(data.department.length) 
     {
      console.log('department',data) 

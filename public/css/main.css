@@ -1,58 +1,59 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
 }
 
-nav{
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 20px 5px 20px;
-    background-color: #d0bebe17;
-    background-color: #333;
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 5px 20px;
+  background-color: #d0bebe17;
+  background-color: #333;
 }
-nav h1{
-    text-transform: uppercase;
-    color:#fff;
+nav h1 {
+  text-transform: uppercase;
+  color: #fff;
 }
-nav ul{
-    margin-top: 10px;
+nav ul {
+  margin-top: 10px;
 }
 
-    nav ul li{
-    display: inline-block;
-    list-style: none;
-    margin: 0 10px;
+nav ul li {
+  display: inline-block;
+  list-style: none;
+  margin: 0 10px;
 }
-nav ul li a{
-    text-decoration: none;
-    color:rgba(255, 255, 255, .5);
-    position: relative;
-    display: inline-block;
+nav ul li a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.5);
+  position: relative;
+  display: inline-block;
 }
-li a::before{
-    content: attr(data-text);
-    color:#fff;
-    position: absolute;
-    left: 0;
-    top: 0%;
-    width: 0%;
-    white-space: nowrap;
-    overflow: hidden;
-    transition: .5s;
-    border-bottom: 3px solid orange;
-
+li a::before {
+  content: attr(data-text);
+  color: #fff;
+  position: absolute;
+  left: 0;
+  top: 0%;
+  width: 0%;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: 0.5s;
+  border-bottom: 3px solid orange;
 }
-li a:hover::before{
-    width: 100%;
+li a:hover::before {
+  width: 100%;
 }
 li a:hover {
-    color: #fff;
-    text-decoration: none;
+  color: #fff;
+  text-decoration: none;
 }
-body {font-family: Arial;}
-        
+body {
+  font-family: Arial;
+}
+
 /* Style the tab */
 .tab {
   overflow: hidden;
@@ -71,7 +72,12 @@ body {font-family: Arial;}
   transition: 0.3s;
   font-size: 17px;
 }
-
+.addRedColor {
+  color: red;
+}
+.removeRedColor {
+  color: rgba(255, 255, 255, 0.5);
+}
 /* Change background color of buttons on hover */
 .tab button:hover {
   background-color: #ddd;
@@ -89,21 +95,20 @@ body {font-family: Arial;}
   border: 1px solid #ccc;
   border-top: none;
 }
-.tbl-class{
-    margin-top: 30px;
+.tbl-class {
+  margin-top: 30px;
 }
-.registration-section{
-    width:50%;
-    margin: 20px auto;
+.registration-section {
+  width: 50%;
+  margin: 20px auto;
 }
-@media(max-width:700px){
-    nav{
-        display: block;
-        text-align: center;
-    }
+@media (max-width: 700px) {
+  nav {
+    display: block;
+    text-align: center;
+  }
 }
 
-.landing-description
-{
-    hyphens: auto
+.landing-description {
+  hyphens: auto;
 }

@@ -1,12 +1,14 @@
 <%- include ('./partials/head.ejs') %>
     <!-- Embedded Javascreipt -->
     <title>Category</title>
-
+ <!--This script tag is used to maintain session using localstorage-->
     <script>
         if(!localStorage.getItem('csams'))
         {
           window.location.href = '/'
         }
+
+        
       </script>
  
 </head>
@@ -30,17 +32,18 @@
     console.log('data',data) %>
     <p  style="margin-top: 20px;"  id="msg" class="alert alert-danger"><%=data.error%></p>
 <% }%>
-  <div id="view" class="tabcontent">
+  // <div id="view" class="tabcontent">
     
-    <div class="container">
-        <table class="table table-striped tbl-class">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Category Name</th>
-            </tr>
-          </thead>
-          <tbody>
+  //   <div class="container">
+  //       <table class="table table-striped tbl-class">
+  //         <thead>
+  //           <tr>
+  //             <th scope="col">#</th>
+  //             <th scope="col">Category Name</th>
+  //           </tr>
+  //         </thead>
+  //         <tbody>
+            <!---This code is used to check if there is values in category then render it on browser-->
         <%  if(data.category.length) 
         {
           
@@ -64,7 +67,7 @@
         <div class="form-group">
           <label >Name</label>
           <input type="text" class="form-control" name="name" id="name" 
-            placeholder="Enter category name">
+            placeholder="Enter department name">
           
         </div>
         <div class="form-group">

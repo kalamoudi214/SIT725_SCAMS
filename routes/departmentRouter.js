@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const userController = require("../controllers/department");
+// To call createDepartment function on controllers/department
 
-router.post("/create", userController.createDepartment),
+const depController = require("../controllers/department");
+
+router.post("/create", depController.createDepartment),
 
 
 module.exports = router;

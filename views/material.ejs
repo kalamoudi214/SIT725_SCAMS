@@ -1,6 +1,7 @@
 <%- include ('./partials/head.ejs') %>
     <!-- Embedded Javascreipt -->
     <title>Material</title>
+     <!--This script tag is used to maintain session using localstorage-->
     <script>
         if(!localStorage.getItem('csams'))
         {
@@ -15,7 +16,7 @@
    <h1 style="text-align: center; margin:30px 0px">Material</h1>
   <div class="tab">
     <button class="tablinks" onclick="tabChange(event, 'view')">View Material</button>
-    <button class="tablinks" onclick="tabChange(event, 'create')">Add Material</button>
+    <button class="tablinks" onclick="tabChange(event, 'create')">Create Material</button>
     
   </div>
 
@@ -30,23 +31,47 @@
     <p  style="margin-top: 20px;"  id="msg" class="alert alert-danger"><%=data.error%></p>
 <% }%>
   <div id="view" class="tabcontent">
-    <h3>Material list will be shown here</h3>
+    <div class="container">
+      <table class="table table-striped tbl-class">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Material Name</th>
+            <th scope="col">File</th>
+          </tr>
+        </thead>
+        <tbody>
+           <!---This code is used to check if there is values in category then render it on browser-->
+      <%  if(data.material.length) 
+      {
+        
+      for(var i=0;i < data.material.length ; i++) { %>
+  
+        <tr>
+          <th scope="row"><%= i+1  %></th>
+          <td><%= data.material[i].name %></td>
+          <td><a target="_blank" href="<%= data.material[i].file_url %>"><i class="fa fa-file"></i></a></td>
+        </tr>
+        <% } } %>
+        </tbody>
+      </table>
+    </div>
     
   </div>
   
   <div id="create" class="tabcontent">
-    <div class="registration-section"><h2 style="text-align: center;">Add Material</h2></div>
+    <div class="registration-section"><h2 style="text-align: center;">Create Department</h2></div>
     <div class="jumbotron registration-section">
       <form action="/material/create" method="post" enctype="multipart/form-data">
         <div class="form-group">
-          <label >Material Name</label>
+          <label >Name Material </label>
           <input type="text" class="form-control" name="name" id="name" 
-            placeholder="Enter department name">
+            placeholder="Enter Name Material name">
         </div>
         <div class="form-group">
             <label >Material File</label>
             <input type="file" class="form-control" name="file" id="file" 
-              placeholder="Enter Material name">
+              placeholder="Select File">
             
           </div>
 
@@ -64,7 +89,7 @@
           </div>
         <div class="form-group">
           <label >Description</label>
-          <input  name="description" type="text-area" class="form-control"  placeholder="Enter description">
+          <input  name="description" type="textarea" class="form-control"  placeholder="Enter description">
         </div>
         
         <button type="submit"  class="btn btn-primary">Submit</button>
