@@ -20,6 +20,6 @@ let storage = multer.diskStorage({
 // here we are using the above storage variable to use in controller
 upload = multer({ storage: storage })
 
-router.post('/create', upload.single('file'), materialController.createMaterial)
-router.get('/get/:id', materialController.getFile)
+router.post('/', upload.single('file'), materialController.createMaterial)
+router.get('/:id', materialController.getFile)
 module.exports = router

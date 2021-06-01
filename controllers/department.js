@@ -28,6 +28,18 @@ const createDepartment = async (req, res) => {
   }
 }
 
+
+
+// return department page with all department
+const getViewDepartment = async (req, res) => {
+  let dep = await department.find().lean()
+
+  res.render('department.ejs', { data: { department: dep } })
+}
+
+
+
 module.exports = {
   createDepartment,
+  getViewDepartment,
 }

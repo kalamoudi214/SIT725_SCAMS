@@ -16,7 +16,7 @@
    <h1 style="text-align: center; margin:30px 0px">Department</h1>
   <div class="tab">
     <button class="tablinks" onclick="tabChange(event, 'view')">View Departments</button>
-    <button class="tablinks" onclick="tabChange(event, 'create')">Create Department</button>
+    <button id="admin" class="tablinks"  data-toggle="modal" data-target="#exampleModal">Create Department</button>
     
   </div>
 
@@ -59,35 +59,47 @@
     
   </div>
   
-  <div id="create" class="tabcontent">
-    <div class="registration-section"><h2 style="text-align: center;">Create Department</h2></div>
-    <div class="jumbotron registration-section">
-      <form action="/department/create" method="post">
-        <div class="form-group">
-          <label >Name</label>
-          <input type="text" class="form-control" name="name" id="name" 
-            placeholder="Enter department name">
-          
-        </div>
-        <div class="form-group">
-          <label >Description</label>
-          <input  name="description" type="text-area" class="form-control"  placeholder="Enter description">
-        </div>
-        
-        <button type="submit"  class="btn btn-primary">Submit</button>
-        <!-- <%
-        if(data.error)
-        { %>
-            <p  style="margin-top: 20px;" class="alert alert-danger"><%=data.error%></p>
-       <% }%> -->
-      </form>
-
+<!--  modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form action="/department/" method="post">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create new department</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       
-    </div>
-  </div>
-  
+      <div class="modal-body">
 
-  
+        <div  class="form-group  ">
+          <label>Name</label>
+          <input   type="text" class="form-control" name="name"  
+            placeholder="Enter Department name">
+        </div>
+
+          <div  class="form-group ">
+            <label>Statement</label>
+            <textarea type="text" class="form-control" name="description"  
+              placeholder="Enter Description"></textarea>
+          </div>
+
+          
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+<!--  modal-->
+
+
+ 
   <script>
   function tabChange(evt, action) {
       $('#msg').css('display','none')
@@ -103,6 +115,16 @@
     document.getElementById(action).style.display = "block";
     evt.currentTarget.className += " active";
   }
+  $(document).ready(function(){
+    initial()
+});
+  function initial()
+  {
+
+     document.getElementById('view').style.display = "block";
+
+  }
   </script>
 </body>
+<%- include ('./partials/footer.ejs') %>
 </html>

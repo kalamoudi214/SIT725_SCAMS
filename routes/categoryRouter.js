@@ -5,7 +5,8 @@ const router = express.Router();
 
 const catController = require("../controllers/category");
 
-router.post("/create", catController.createCategory),
+router.post("/", catController.createCategory),
+router.get("/",catController.getViewCategory),
 
 
 module.exports = router;

@@ -71,18 +71,13 @@ app.get('/home', async (req, res) => {
   res.render('home.ejs')
 })
 
-// return department page with all department
-app.get('/department', async (req, res) => {
-  let dep = await departmentModel.find().lean()
+app.get('/user', async (req, res) => {
+  let users = await userModel.find().lean()
 
-  res.render('department.ejs', { data: { department: dep } })
+  res.render('users.ejs', { data: { user: users } })
 })
 
-// return category page with all category
-app.get('/category', async (req, res) => {
-  let category = await categoryModel.find().lean()
-  res.render('category.ejs', { data: { category: category } })
-})
+
 //return material page with all material and category
 app.get('/material', async (req, res) => {
   let category = await categoryModel.find().lean()
@@ -92,12 +87,6 @@ app.get('/material', async (req, res) => {
   })
 })
 
-//return user page with all users
-app.get('/user', async (req, res) => {
-  let users = await userModel.find().lean()
-
-  res.render('users.ejs', { data: { user: users } })
-})
 
 http.listen(port, function () {
   console.log(`listening on port ${port}...`)

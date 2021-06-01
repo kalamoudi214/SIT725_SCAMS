@@ -18,7 +18,7 @@
    <h1 style="text-align: center; margin:30px 0px">Category</h1>
   <div class="tab">
     <button class="tablinks" onclick="tabChange(event, 'view')">View Category</button>
-    <button class="tablinks" onclick="tabChange(event, 'create')">Create Category</button>
+    <button  id="admin" class="tablinks"data-toggle="modal" data-target="#exampleModal">Create Category</button>
     
   </div>
 
@@ -32,17 +32,19 @@
     console.log('data',data) %>
     <p  style="margin-top: 20px;"  id="msg" class="alert alert-danger"><%=data.error%></p>
 <% }%>
-  // <div id="view" class="tabcontent">
+
+
+  <div id="view" class="tabcontent">
     
-  //   <div class="container">
-  //       <table class="table table-striped tbl-class">
-  //         <thead>
-  //           <tr>
-  //             <th scope="col">#</th>
-  //             <th scope="col">Category Name</th>
-  //           </tr>
-  //         </thead>
-  //         <tbody>
+    <div class="container">
+        <table class="table table-striped tbl-class">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Category Name</th>
+            </tr>
+          </thead>
+          <tbody>
             <!---This code is used to check if there is values in category then render it on browser-->
         <%  if(data.category.length) 
         {
@@ -60,33 +62,44 @@
     
   </div>
   
-  <div id="create" class="tabcontent">
-    <div class="registration-section"><h2 style="text-align: center;">Create Department</h2></div>
-    <div class="jumbotron registration-section">
-      <form action="/category/create" method="post">
-        <div class="form-group">
-          <label >Name</label>
-          <input type="text" class="form-control" name="name" id="name" 
-            placeholder="Enter department name">
-          
-        </div>
-        <div class="form-group">
-          <label >Description</label>
-          <input  name="description" type="text-area" class="form-control"  placeholder="Enter description">
-        </div>
-        
-        <button type="submit"  class="btn btn-primary">Submit</button>
-        <!-- <%
-        if(data.error)
-        { %>
-            <p  style="margin-top: 20px;" class="alert alert-danger"><%=data.error%></p>
-       <% }%> -->
-      </form>
 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form action="/category/" method="post">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create new category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       
+      <div class="modal-body">
+
+        <div  class="form-group  ">
+          <label>Name</label>
+          <input   type="text" class="form-control" name="name"  
+            placeholder="Enter Department name">
+        </div>
+
+          <div  class="form-group ">
+            <label>Statement</label>
+            <textarea type="text" class="form-control" name="description"  
+              placeholder="Enter Description"></textarea>
+          </div>
+
+          
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Create</button>
+      </div>
     </div>
+  </form>
   </div>
-  
+</div>
 
   
   <script>
@@ -104,6 +117,16 @@
     document.getElementById(action).style.display = "block";
     evt.currentTarget.className += " active";
   }
+  $(document).ready(function(){
+    initial()
+});
+  function initial()
+  {
+
+     document.getElementById('view').style.display = "block";
+
+  }
   </script>
 </body>
+<%- include ('./partials/footer.ejs') %>
 </html>
