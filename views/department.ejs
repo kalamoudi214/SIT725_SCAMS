@@ -13,10 +13,11 @@
 <body>
   <%- include ('./partials/homeNavbar.ejs') %>
 
-   <h1 style="text-align: center; margin:30px 0px">Department</h1>
-  <div class="tab">
-    <button class="tablinks" onclick="tabChange(event, 'view')">View Departments</button>
-    <button id="admin" class="tablinks"  data-toggle="modal" data-target="#exampleModal">Create Department</button>
+   <h1 style="text-align: center; margin:30px 0px;"><i>Departments</i></h1>
+
+   <div class="text-right mr">
+  <!--This to call function for add department-->
+    <button id=" admin"   class="btn btn-success" data-toggle="modal" data-target="#exampleModal"><b>Add</b></button>
     
   </div>
 
@@ -30,7 +31,7 @@
     console.log('data',data) %>
     <p  style="margin-top: 20px;"  id="msg" class="alert alert-danger"><%=data.error%></p>
 <% }%>
-  <div id="view" class="tabcontent">
+  <div>
     <div class="container">
     <table class="table table-striped tbl-class">
       <thead>
@@ -40,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-            <!---This code is used to check if there is values in category then render it on browser-->
+            <!---This code is used to check if there is values in department then render it on browser-->
 
     <%  if(data.department.length) 
     {
@@ -85,8 +86,6 @@
               placeholder="Enter Description"></textarea>
           </div>
 
-          
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -97,34 +96,6 @@
   </div>
 </div>
 <!--  modal-->
-
-
- 
-  <script>
-  function tabChange(evt, action) {
-      $('#msg').css('display','none')
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(action).style.display = "block";
-    evt.currentTarget.className += " active";
-  }
-  $(document).ready(function(){
-    initial()
-});
-  function initial()
-  {
-
-     document.getElementById('view').style.display = "block";
-
-  }
-  </script>
 </body>
 <%- include ('./partials/footer.ejs') %>
 </html>

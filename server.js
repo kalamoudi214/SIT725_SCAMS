@@ -13,10 +13,7 @@ const categoryRoute = require('./routes/categoryRouter')
 const departmentRoute = require('./routes/departmentRouter')
 const materialRouter = require('./routes/materialRoute')
 const departmentModel = require('./models/department')
-//importing the modules
-const categoryModel = require('./models/category')
-const materialModel = require('./models/material')
-const userModel = require('./models/user')
+
 const mongoose = require('mongoose')
 
 const port = 3000
@@ -69,22 +66,6 @@ app.get('/Login', async (req, res) => {
 })
 app.get('/home', async (req, res) => {
   res.render('home.ejs')
-})
-
-app.get('/user', async (req, res) => {
-  let users = await userModel.find().lean()
-
-  res.render('users.ejs', { data: { user: users } })
-})
-
-
-//return material page with all material and category
-app.get('/material', async (req, res) => {
-  let category = await categoryModel.find().lean()
-  let material = await materialModel.find().lean()
-  res.render('material.ejs', {
-    data: { category: category, material: material },
-  })
 })
 
 

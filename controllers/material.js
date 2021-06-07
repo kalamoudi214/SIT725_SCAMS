@@ -1,7 +1,7 @@
 const url = require('url')
 const path = require('path')
-const material = require('../models/material')
-const category = require('../models/category')
+const materialModel = require('../models/material')
+const categoryModel = require('../models/category')
 const socket = require('../server')
 
 //// this function is used to create send file from database
@@ -30,9 +30,9 @@ const createMaterial = async (req, res) => {
       file_path: req.file.path,
     }
 
-    let result = await material.create({ ...obj })
-    let cat = await category.find().lean()
-    let mat = await material.find().lean()
+    let result = await materialModel.create({ ...obj })
+    let cat = await categoryModel.find().lean()
+    let mat = await materialModel.find().lean()
     // this line is use to send notification
     let a = await socket.sockets.emit('message', { type: 'material' })
     res.render('material.ejs', {
@@ -48,4 +48,15 @@ const createMaterial = async (req, res) => {
   }
 }
 
-module.exports = { createMaterial, getFile }
+//return material page with all material and category
+
+const getMaterialView = async (req, res) => {
+  let cat = await categoryModel.find().lean()
+  let mat = await materialModel.find().lean()
+  res.render('material.ejs', {data: { category: cat, material: mat },
+  })
+
+
+}
+
+module.exports = { createMaterial, getFile , getMaterialView}

@@ -1,32 +1,58 @@
-const user = require('../models/user')
+const { render } = require('ejs')
+const { findOneAndUpdate } = require('../models/user')
+const userModel = require('../models/user')
 
 ///// this function is used to create user in database
 const createUser = async (req, res) => {
   try {
     let data = req.body
+    if (data.userName) {
+      let users = await userModel.find().lean()
+      let check = users.find((element) => element.email === data.email)
+      if (!check) {
+        let result = await userModel.create({ ...data })
 
-    let users = await user.find().lean()
-    let check = users.find((element) => element.email === data.email)
-    if (!check) {
-      let result = await user.create({ ...data })
-
-      res.redirect('/')
+        res.redirect('/')
+      } else {
+        res.status(400).json({ message: 'Email already exist' })
+      }
     } else {
-      res.status(400).json({ message: 'Email already exist' })
+      let result = await userModel.findOneAndUpdate(
+        { email: data.email },
+        { role: data.role },
+        { new: true },
+      )
+      let users = await userModel.find()
+      res.render('users.ejs', {
+        data: { user: users, success: 'User Role updated successfully' },
+      })
     }
   } catch (e) {
     console.log(e)
-    res.json({ error: 'There is an error while creating user' })
+    if (req.body.userName) {
+      res.json({ error: 'There is an error while creating user' })
+    } else {
+      let users = await userModel.find()
+      res.render('users.ejs', {
+        data: { user: users, error: 'Failed to update user role' },
+      })
+      res.render
+    }
   }
 }
 
-///// this function is used to login user in database
 const loginUser = async (req, res) => {
-  let result = await user.findOne({ email: req.body.email }).lean()
+  let result = await userModel.findOne({ email: req.body.email }).lean()
   if (result && Object.keys(result).length) {
     if (req.body.password == result.password) {
-      //res.redirect('/home')
-      res.render('login.ejs', { data: { success: 'login successfully' } })
+      //res.redirect('/dashboard')
+      res.render('login.ejs', {
+        data: {
+          success: 'login successfully',
+          id: result._id,
+          role: result.role,
+        },
+      })
     } else {
       res.render('login.ejs', { data: { error: 'incorrect password' } })
     }
@@ -35,7 +61,19 @@ const loginUser = async (req, res) => {
   }
 }
 
+const updateRole = async (req, res) => {
+  console.log(req.body)
+}
+
+const getUserVeiw = async (req, res) => {
+      let users = await userModel.find().lean()
+      res.render('users.ejs', { data: { user: users } })
+}
+
+
 module.exports = {
   createUser,
   loginUser,
+  updateRole,
+  getUserVeiw,
 }
