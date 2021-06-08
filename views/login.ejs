@@ -39,7 +39,9 @@
        { %>
            <p  style="margin-top: 20px;" class="alert alert-success"><%=data.success%></p>
            <script>
-             localStorage.setItem('csams','login')
+             localStorage.setItem('csams','<%= data.id %>')
+             localStorage.setItem('role','<%= data.role %>')
+             localStorage.setItem('name','<%= data.name %>')
              window.location.href = '/home'
            </script>
       <% }%>

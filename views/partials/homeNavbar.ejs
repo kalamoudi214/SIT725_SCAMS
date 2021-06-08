@@ -1,10 +1,11 @@
 <nav>
-    <h1>CSAMS</h1>
+    <a href="/"><h1>CSAMS</h1></a>
     <ul>
       <li><a data-text="User" href="/user">User</a></li>
       <li><a data-text="Department" href="/department">Department</a></li>
       <li><a data-text="Category" href="/category">Category</a></li>
       <li><a data-text="Material" href="/Material">Material</a></li>
+      <li><a data-text="Quiz" href="/Quiz">Quiz</a></li>
       <li  class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i id="bell" class="fa fa-bell"></i>
@@ -12,15 +13,43 @@
       <div class="dropdown-menu" id="drop-down" aria-labelledby="navbarDropdown">
       </div>
     </li>
-      <li><a data-text="Logout" href="#" id="logout" >Logout</a></li>
+
+    <li  class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i id="bell" class="fa fa-user-circle icon-size"></i>
+      </a>
+      <div class="dropdown-menu" id="drop-down2" aria-labelledby="navbarDropdown">
+     
+      </div>
+    </li>
+      <!-- <li><a data-text="Logout" href="#" id="logout" >Logout</a></li> -->
   
     </ul>
   </nav>
 
   <script>
+    let name = localStorage.getItem('name')
+    let notificationList = document.getElementById('drop-down2')
+  var   mainDiv = document.createElement('a')
+    mainDiv.classList.add('dropdown-item')
+  
+    markup = ` <span >${name}</span>`
+    mainDiv.innerHTML = markup
+    notificationList.appendChild(mainDiv)
+     mainDiv = document.createElement('a')
+    mainDiv.classList.add('dropdown-item')
+    mainDiv.href = '/material'
+    markup = ` <span id="logout" >Logout</span>`
+    mainDiv.innerHTML = markup
+    notificationList.appendChild(mainDiv)
+ 
     $('#logout').click(function()
     {
+      
       localStorage.removeItem('csams');
+      localStorage.removeItem('role');
+      localStorage.removeItem('name');
+      localStorage.removeItem('quizId')
       window.location.href = '/'
     })
   </script>

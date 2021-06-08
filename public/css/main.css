@@ -266,12 +266,13 @@ body {
   width: 50%;
   margin: 20px auto;
 }
-
-
-@media (min-width: 768px) {
-  .abs-center-x {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+@media (max-width: 700px) {
+  nav {
+    display: block;
+    text-align: center;
   }
+}
+
+.landing-description {
+  hyphens: auto;
 }

@@ -7,6 +7,7 @@
         {
           window.location.href = '/'
         }
+        
       </script>
 
 </head>
@@ -14,11 +15,11 @@
   <%- include ('./partials/homeNavbar.ejs') %>
 
    <h1 style="text-align: center; margin:30px 0px">Material</h1>
-  <div class="tab">
-    <button class="tablinks" onclick="tabChange(event, 'view')">View Material</button>
-    <button class="tablinks" onclick="tabChange(event, 'create')">Create Material</button>
-    
+    <div class="text-right mr">
+    <!-- <button class=" btn btn-secondary tablinks" id='viewLink' onclick="tabChange(event, 'view')">View Material</button> -->
+    <button  id=" admin" class="tablinks btn btn-secondary " data-toggle="modal" data-target="#exampleModal">Create Material</button>
   </div>
+  
 
 <%if(data.success)
 {
@@ -32,51 +33,56 @@
 <% }%>
   <div id="view" class="tabcontent">
     <div class="container">
-      <table class="table table-striped tbl-class">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Material Name</th>
-            <th scope="col">File</th>
-          </tr>
-        </thead>
-        <tbody>
-           <!---This code is used to check if there is values in category then render it on browser-->
-      <%  if(data.material.length) 
-      {
-        
-      for(var i=0;i < data.material.length ; i++) { %>
-  
-        <tr>
-          <th scope="row"><%= i+1  %></th>
-          <td><%= data.material[i].name %></td>
-          <td><a target="_blank" href="<%= data.material[i].file_url %>"><i class="fa fa-file"></i></a></td>
-        </tr>
-        <% } } %>
-        </tbody>
-      </table>
+                 <!---This code is used to check if there is values in category then render it on browser-->
+                 <div class="registration-section"><h2 style="text-align: center;">Category</h2></div>
+                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                  
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                      <% if(data.category && data.material)
+                      {
+                        console.log('mt',data.material)
+                        let mt = JSON.stringify(data.material)
+                        for(var i=0;i < data.category.length ; i++) {
+                        %>
+                        <li class="nav-item active">
+                          <a class="nav-link" onclick="geter('<%= data.category[i].name %>','<%= mt%>')" href="#"><%= data.category[i].name %><span class="sr-only">(current)</span></a>
+                        </li> 
+                     <% }}%>
+      
+                    </ul>
+                  </div>
+                </nav>
+            
     </div>
-    
+    <div class="container">
+    <div id="rend" class="row"></div>
+      
   </div>
+</div>
   
-  <div id="create" class="tabcontent">
+  <!-- <div id="create" class="tabcontent">
     <div class="registration-section"><h2 style="text-align: center;">Create Department</h2></div>
     <div class="jumbotron registration-section">
-      <form action="/material/create" method="post" enctype="multipart/form-data">
+      <form action="/material/" method="post" enctype="multipart/form-data">
         <div class="form-group">
-          <label >Name Material </label>
+          <label >Name</label>
           <input type="text" class="form-control" name="name" id="name" 
-            placeholder="Enter Name Material name">
+            placeholder="Enter department name">
         </div>
         <div class="form-group">
-            <label >Material File</label>
+            <label >Material</label>
             <input type="file" class="form-control" name="file" id="file" 
-              placeholder="Select File">
+              placeholder="Enter department name">
             
           </div>
 
           <div class="form-group">
             <label >Category</label>
+          
             <select class="form-select" name="category"  >
               <option selected>Select Category</option>
               <% if(data.category) {
@@ -89,26 +95,139 @@
           </div>
         <div class="form-group">
           <label >Description</label>
-          <input  name="description" type="textarea" class="form-control"  placeholder="Enter description">
+          <input  name="description" type="text-area" class="form-control"  placeholder="Enter description">
         </div>
         
         <button type="submit"  class="btn btn-primary">Submit</button>
-        <!-- <%
-        if(data.error)
-        { %>
-            <p  style="margin-top: 20px;" class="alert alert-danger"><%=data.error%></p>
-       <% }%> -->
+
       </form>
 
       
     </div>
+  </div> -->
+
+
+
+  <!-- modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form action="/material/" method="post" enctype="multipart/form-data">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create Material</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        
+        <div class="modal-body">
+  
+          <div  class="form-group  ">
+            <label>Name</label>
+            <input   type="text" class="form-control" name="name"  
+              placeholder="Enter Department name">
+          </div>
+          <div class="form-group">
+            <label >Material</label>
+            <input type="file" class="form-control" name="file" id="file" 
+              placeholder="Upload material file">
+            
+          </div>
+
+          <div class="form-group">
+            <label >Thumbnail Image</label>
+            <input type="file" class="form-control" name="file1" id="file" 
+              placeholder="Upload thumbnail image">
+            
+          </div>
+
+          <div class="form-group">
+            <label >Category</label>
+            <!-- <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> -->
+            <select class="form-select" name="category"  >
+              <option selected>Select Category</option>
+              <% if(data.category) {
+                console.log('category',data)
+                for(var i=0;i < data.category.length ; i++) {
+                  console.log(data.category[i].name ) %>
+              <option value= '<%= data.category[i].name %>'><%= data.category[i].name %></option>
+              <% }} %>
+            </select>
+          </div>
+  
+            <div  class="form-group ">
+              <label>Description</label>
+              <textarea type="text" class="form-control" name="description"  
+                placeholder="Enter Description"></textarea>
+            </div>
+  
+            
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </div>
+    </form>
+    </div>
   </div>
+
+  <!-- modal-->
   
 
   
   <script>
+    
+    function geter(category, mt) {
+  //document.getElementById("demo").innerHTML = "Hello World";
+  console.log('category', category);
+  console.log('material',JSON.parse(mt))
+  let material = JSON.parse(mt)
+  
+  let notificationList= document.querySelector('#rend')
+  let b = notificationList.childNodes;
+  console.log(b.length)
+  if(b.length>0)
+  {
+    console.log('wrong')
+    while(notificationList.firstChild){
+      notificationList.removeChild(notificationList.firstChild)
+    }
+  
+  }
+
+   console.log(material[0].name)
+    for(var i=0;i<material.length;i++)
+    {
+      
+      if(material[i].category === category)
+      {
+        let mainDiv = document.createElement('div')
+        mainDiv.classList.add('col-lg-4', 'cursor','mt')
+      markup = ` <div class="card" style="width: 18rem;"> <a style="cursor:pointer;"class="cursor" href="${material[i].file_url}"><img class="card-img-top" src="${material[i].thumbnail_url}"  alt="Card image cap"></a>
+  <div class="card-body">
+    <h5 class="card-title">${material[i].name}</h5>
+    <p class="card-text">${material[i].description}</p>
+  </div> </div>`
+    mainDiv.innerHTML = markup
+    notificationList.appendChild(mainDiv) 
+  }
+    }
+
+  }
+  $(document).ready(function(){
+    initial()
+});
+  function initial()
+  {
+
+     document.getElementById('view').style.display = "block";
+
+  }
   function tabChange(evt, action) {
       $('#msg').css('display','none')
+      
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
@@ -119,8 +238,11 @@
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(action).style.display = "block";
+
+
     evt.currentTarget.className += " active";
   }
   </script>
 </body>
+<%- include ('./partials/footer.ejs') %>
 </html>

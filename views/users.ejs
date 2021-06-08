@@ -13,9 +13,8 @@
 <body>
   <%- include ('./partials/homeNavbar.ejs') %>
 
-   <h1 style="text-align: center; margin:30px 0px">Users</h1>
+   <h1 style="text-align: center; margin:30px 0px"><i>Users</i></h1>
   <div class="tab">
-    <button class="tablinks" onclick="tabChange(event, 'view')">View Users</button>
   </div>
 
 <%if(data.success)
@@ -46,22 +45,19 @@
         <%  if(data.user.length) 
         {
           
-          
-        for(var i=0;i < data.user.length ; i++) { %>
-    
+          let count =0;
+        for(var i=0;i < data.user.length ; i++) {
+          count++; %>
+     
           <tr>
             <th scope="row"><%= i+1  %></th>
             <td><%= data.user[i].userName %></td>
             <td><%= data.user[i].email %></td>
             <td><%= data.user[i].department %></td>
             <td><%= data.user[i].role %></td>
-            <td id="ad"><button  class="btn btn-primary"  id="admin" type="button"  data-toggle="modal" data-target="#exampleModal">Edit</button></td>
+            <td id="ad<%= i+1  %>"><button  class="btn btn-primary"  id="admin" type="button"  data-toggle="modal" data-target="#exampleModal">Edit</button></td>
 
-        
-          <script>
-
-            
-          </script>
+    
            
           </tr>
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -100,8 +96,35 @@
             </form>
             </div>
           </div> 
+
+
           
-          <% } } %>
+          <% } 
+          console.log('count',count)
+          if(count == data.user.length)
+          { %>
+            <script>
+              let a = '<%=  data.user.length %>'
+              console.log('users', a)
+              var r = localStorage.getItem('role')
+
+                  r = r.toLowerCase()
+                  if (!r.includes('admin')) {
+
+                    for( var i=0;i< a ;i++)
+                    {
+                      console.log('gfd')
+                       let d = document.getElementById(`ad${i+1}`)
+      //child = d.lastChild
+      
+                        d.removeChild(d.lastChild)
+                    }
+
+                  }
+              
+            </script>
+          <% }
+        } %>
           </tbody>
         </table>
       </div>
@@ -137,24 +160,8 @@
   {
 
      document.getElementById('view').style.display = "block";
-   // evt.currentTarget.className += " active";
-    //document.getElementById('viewLink').className = "  active"
+  
   }
-
-
-    var r = localStorage.getItem('role')
-
-    r = r.toLowerCase()
-    if (!r.includes('admin')) {
-
-    console.log('gfd')
-      let d = document.getElementById('ad')
-      //child = d.lastChild
-      
-     d.style.display = 'none'
-     // d.style.visibility = 'hidden'
-    }
-
 
 
   </script>
