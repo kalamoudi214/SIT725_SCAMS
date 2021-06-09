@@ -1,28 +1,27 @@
-const { render } = require('ejs')
 const { findOneAndUpdate } = require('../models/user')
-const userModel = require('../models/user')
+const user = require('../models/user')
 
 ///// this function is used to create user in database
 const createUser = async (req, res) => {
   try {
     let data = req.body
     if (data.userName) {
-      let users = await userModel.find().lean()
+      let users = await user.find().lean()
       let check = users.find((element) => element.email === data.email)
       if (!check) {
-        let result = await userModel.create({ ...data })
+        let result = await user.create({ ...data })
 
         res.redirect('/')
       } else {
         res.status(400).json({ message: 'Email already exist' })
       }
     } else {
-      let result = await userModel.findOneAndUpdate(
+      let result = await user.findOneAndUpdate(
         { email: data.email },
         { role: data.role },
         { new: true },
       )
-      let users = await userModel.find()
+      let users = await user.find()
       res.render('users.ejs', {
         data: { user: users, success: 'User Role updated successfully' },
       })
@@ -32,7 +31,7 @@ const createUser = async (req, res) => {
     if (req.body.userName) {
       res.json({ error: 'There is an error while creating user' })
     } else {
-      let users = await userModel.find()
+      let users = await user.find()
       res.render('users.ejs', {
         data: { user: users, error: 'Failed to update user role' },
       })
@@ -42,7 +41,7 @@ const createUser = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
-  let result = await userModel.findOne({ email: req.body.email }).lean()
+  let result = await user.findOne({ email: req.body.email }).lean()
   if (result && Object.keys(result).length) {
     if (req.body.password == result.password) {
       //res.redirect('/dashboard')
@@ -51,6 +50,7 @@ const loginUser = async (req, res) => {
           success: 'login successfully',
           id: result._id,
           role: result.role,
+          name: result.userName,
         },
       })
     } else {
@@ -65,15 +65,8 @@ const updateRole = async (req, res) => {
   console.log(req.body)
 }
 
-const getUserVeiw = async (req, res) => {
-      let users = await userModel.find().lean()
-      res.render('users.ejs', { data: { user: users } })
-}
-
-
 module.exports = {
   createUser,
   loginUser,
-  updateRole,
-  getUserVeiw,
+
 }
