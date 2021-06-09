@@ -1,0 +1,387 @@
+<%- include ('./partials/head.ejs') %>
+    <!-- Embedded Javascreipt -->
+    <title>Category</title>
+ <!--This script tag is used to maintain session using localstorage-->
+    <script>
+        if(!localStorage.getItem('csams'))
+        {
+          window.location.href = '/'
+        }
+
+        
+      </script>
+              <% if(data.success){
+          
+              %>
+              <script>
+                  setTimeout(function(){
+                window.location.href = '/quiz'
+              },3000)
+              </script>
+
+              <% } %>
+            
+ 
+</head>
+<body>
+  <%- include ('./partials/homeNavbar.ejs') %>
+
+   <h1 style="text-align: center; margin:30px 0px"><i>Quiz</i></h1>
+   <div class="text-right mr">
+    <button class="tablinks btn btn-secondary" onclick="tabChange(event, 'view')"><b>View Quizes</b></button>
+    <button class="tablinks btn btn-info " onclick="tabChange(event, 'score')"><b>Quiz Scores</b></button>
+    <button id="admin" class="tablinks btn btn-success"  data-toggle="modal" data-target="#modalLoginForm" ><b>Add Quiz</b></button>
+  </div>
+
+<%if(data.success)
+{
+    console.log('data',data) %>
+    <script>
+      setTimeout(function(){alert('Quiz has been created successfully')},3000)
+    </script>
+    <!-- <p  style="margin-top: 20px;"  id="msg" class="alert alert-success"><%=data.success%></p> -->
+<% }%>
+<%if(data.error)
+{
+    console.log('data',data) %>
+    <script>
+      setTimeout(function(){alert('Quiz name already exist')},3000)
+    </script>
+    <!-- <p  style="margin-top: 20px;"  id="msg" class="alert alert-danger"><%=data.error%></p> -->
+<% }%>
+
+  <div class="container">
+    <table class="table table-striped tbl-class">
+      <thead class="middle">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Category</th>
+        
+          <th scope="col">Quiz  Name</th>
+          <th scope="col">Total Score</th>
+          <th scope="col">Score Gain</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <!---This code is used to check if there is values in category then render it on browser-->
+  
+      </tbody>
+    </table>
+  </div>
+</div>
+  <div id="view" class="tabcontent">
+    <div class="container">
+      <table class="table table-striped tbl-class">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Quiz Name</th>
+            <th scope="col">Attemp Quiz</th>
+            <th id="admin" scope="col">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!---This code is used to check if there is values in category then render it on browser-->
+      <%  if(data.quiz.length) 
+      {
+        let count =0;
+        
+      for(var i=0;i < data.quiz.length ; i++) {
+        count++; %>
+        
+        <tr>
+          <th scope="row"><%= i+1  %></th>
+          <td><%= data.quiz[i].name %></td>
+          <td><button class="btn btn-warning" type="button" onclick="giveQuiz('<%= data.quiz[i]._id %>')" >Attempt Quiz</button></td>
+          <td id="ad<%= i+1  %>" ><button  onclick="giveQuizId('<%= data.quiz[i]._id %>')" class="btn btn-success" type="button"  data-toggle="modal" data-target="#exampleModal">Add Questions</button></td>
+          <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <form >
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add Quiz questions</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                
+                <div class="modal-body">
+  
+            
+  
+                    <div  class="form-group ">
+                      <label>Statement</label>
+                      <input id="statement" type="text" class="form-control" name="statement"  
+                        placeholder="Enter Question Statement"/>
+                    </div>
+  
+   
+                    <div  class="form-group ">
+                      <label>Option (a)</label>
+                      <input id="a" type="text" class="form-control" name="a"  
+                        placeholder="Option a"> 
+                    </div>
+                    <div  class="form-group ">
+                      <label>Option (b)</label>
+                      <input id="b" type="text" class="form-control" name="b"  
+                        placeholder="Option b"> 
+                    </div>
+  
+                    <div  class="form-group ">
+                      <label>Option (c)</label>
+                      <input id="c" type="text" class="form-control" name="c"  
+                        placeholder="Option c"> 
+                    </div>
+  
+                    <div  class="form-group">
+                      <label>Option (answer)</label>
+                      <input id="answer" type="text" class="form-control" name="answer"  
+                        placeholder="Option answer"> 
+                    </div>
+                    
+       
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button  onClick="quizForm()" class="btn btn-primary">Add</button>
+                </div>
+              </div>
+            </form>
+            </div>
+          </div>
+        </tr>
+    
+        <% } 
+        
+        if(count == data.quiz.length)
+        { %>
+          <script>
+            let a = '<%=  data.quiz.length %>'
+            var r = localStorage.getItem('role')
+
+                r = r.toLowerCase()
+                if (!r.includes('admin')) {
+
+                  for( var i=0;i< a ;i++)
+                  {
+                    console.log('gfd')
+                     let d = document.getElementById(`ad${i+1}`)
+    //child = d.lastChild
+                      console.log(d.childNodes.length)
+                      d.removeChild(d.lastChild)
+                  }
+
+                }
+            
+          </script>
+        <% }
+      } %>
+        </tbody>
+      </table>
+    </div>
+  
+    
+  </div>
+      <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Create Quiz</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="/quiz/" method="post">
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <label data-error="wrong" data-success="right" for="defaultForm-email">Enter Quiz Name</label>
+          <input type="text" name="name" id="defaultForm-email" class="form-control validate">
+        </div>
+
+        <div class="md-form mb-4">
+            <label data-error="wrong" data-success="right" for="defaultForm-pass">Quiz type</label>
+          <input type="text" name="type" id="defaultForm-pass" class="form-control validate">
+        </div>
+
+        <div class="md-form mb-4">
+            <label data-error="wrong" data-success="right" for="defaultForm-pass">Description</label>
+            <textarea type="text" name="description" id="defaultForm-pass" row="4" class=" md-textarea form-control validate"></textarea>    
+        </div>
+
+        <div class="form-group">
+            <label >Category</label>
+            <!-- <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> -->
+            <select class="form-select" name="category"  >
+              <option selected>Select Category</option>
+              <% if(data.category) {
+                console.log('category',data)
+                for(var i=0;i < data.category.length ; i++) {
+                  console.log(data.category[i].name ) %>
+              <option value= '<%= data.category[i].name %>'><%= data.category[i].name %></option>
+              <% }} %>
+            </select>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="submit" class="btn btn-default">Create</button>
+          </div>
+        </form>
+      </div>
+   
+
+    </div>
+  </div>
+</div>
+
+
+ 
+    
+    <!-- <div class="jumbotron registration-section">
+      <form action="/category/" method="post">
+        <div class="form-group">
+          <label >Name</label>
+          <input type="text" class="form-control" name="name" id="name" 
+            placeholder="Enter department name">
+          
+        </div>
+        <div class="form-group">
+          <label >Description</label>
+          <input  name="description" type="text-area" class="form-control"  placeholder="Enter description">
+        </div>
+        
+        <button type="submit"  class="btn btn-primary">Submit</button>
+     
+      </form>
+
+      
+    </div> -->
+
+
+  
+
+  
+  <script>
+
+function giveQuiz( quizId)
+{
+  
+  console.log('haha')
+  $.post("/quiz/checkQuiz",
+  {
+    userId: localStorage.getItem('csams'),
+    quizId: quizId
+  },
+  function(data, status){
+    
+    if(data.data == true )
+    {
+      window.location.href = `/quizQuestion/${quizId}`
+      
+    }
+    if( data.data == false )
+    {
+      alert('You have already given that quiz');
+    }
+   // alert("Data: " + data + "\nStatus: " + status);
+  });
+}
+
+  function tabChange(evt, action) {
+
+      $('#msg').css('display','none')
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(action).style.display = "block";
+    evt.currentTarget.className += " active";
+
+    if(action === 'score')
+    {
+      let userId = localStorage.getItem('csams');
+    $.post("/quizQuestion/getQuizByOneuser", {userId: userId}, function(data, status){
+    console.log(data.data)
+    let list = document.getElementById('list');
+      list.style.textAlign = 'center'
+    let b = list.childNodes;
+  console.log(b.length)
+  if(b.length>0)
+  {
+    console.log('wrong')
+    while(list.firstChild){
+      list.removeChild(list.firstChild)
+    }
+  
+  }
+    
+    for(var i=0;i<data.data.length;i++)
+    {
+      let b = data.data[i];
+      let mainDiv = document.createElement('tr');
+      let markup = `
+      <td>${i+1}</td>
+      <td>${b.quizCategory}</td>
+      <td>${b.quizName}</td>
+      <td>${b.total}</td>
+      <td>${b.score}</td>
+      `
+
+      mainDiv.innerHTML = markup;
+      list.appendChild(mainDiv)
+      
+
+    }
+ 
+   
+  });
+    }
+  }
+
+  function getQuizData()
+  {
+
+  }
+  $(document).ready(function(){
+    initial()
+});
+  function initial()
+  {
+
+     document.getElementById('view').style.display = "block";
+
+  }
+ 
+  var quizId;
+  function giveQuizId(quizId)
+  { console.log(quizId)
+    localStorage.setItem('quizId',quizId)
+    quizId = quizId;
+  }
+  function quizForm()
+  {
+      let quizId = localStorage.getItem('quizId');
+      localStorage.removeItem('quizId')
+      let statement = document.getElementById('statement').value;
+      let a = document.getElementById('a').value;
+      let b = document.getElementById('b').value;
+      let c = document.getElementById('c').value;
+      let answer = document.getElementById('answer').value;
+  
+      let obj = {
+        statement,a,b,c,answer,quizId:quizId
+      }
+      $.post("/quizQuestion/", obj, function(data, status){
+        alert('Question has been addes successfully')
+        window.location.href='/Quiz'
+      })
+  }
+ </script>
+</body>
+<%- include ('./partials/footer.ejs') %>
+</html>
+
