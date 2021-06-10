@@ -1,5 +1,5 @@
 const department = require('../models/department')
-//// this function is used to create catregory in department
+//// this function is used to create department in database
 
 const createDepartment = async (req, res) => {
   try {

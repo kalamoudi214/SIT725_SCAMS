@@ -14,10 +14,10 @@
 <body>
   <%- include ('./partials/homeNavbar.ejs') %>
 
-   <h1 style="text-align: center; margin:30px 0px">Material</h1>
+   <h1 style="text-align: center; margin:30px 0px"><i>Material</i></h1>
     <div class="text-right mr">
-    <!-- <button class=" btn btn-secondary tablinks" id='viewLink' onclick="tabChange(event, 'view')">View Material</button> -->
-    <button  id=" admin" class="tablinks btn btn-secondary " data-toggle="modal" data-target="#exampleModal">Create Material</button>
+    <button  id=" admin" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"><b>Add</b></button>
+
   </div>
   
 
@@ -25,6 +25,9 @@
 {
     console.log('data',data) %>
     <p  style="margin-top: 20px;"  id="msg" class="alert alert-success"><%=data.success%></p>
+    <script>
+      window.location.href = '/material'
+    </script>
 <% }%>
 <%if(data.error)
 {
@@ -46,10 +49,11 @@
                       {
                         console.log('mt',data.material)
                         let mt = JSON.stringify(data.material)
+                        
                         for(var i=0;i < data.category.length ; i++) {
                         %>
                         <li class="nav-item active">
-                          <a class="nav-link" onclick="geter('<%= data.category[i].name %>','<%= mt%>')" href="#"><%= data.category[i].name %><span class="sr-only">(current)</span></a>
+                          <a class="nav-link" onclick="geter('<%= data.category[i].name %>','<%= mt %>')" href="#"><%= data.category[i].name %><span class="sr-only">(current)</span></a>
                         </li> 
                      <% }}%>
       
@@ -143,7 +147,7 @@
 
           <div class="form-group">
             <label >Category</label>
-            <!-- <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"> -->
+            
             <select class="form-select" name="category"  >
               <option selected>Select Category</option>
               <% if(data.category) {
@@ -180,9 +184,10 @@
   <script>
     
     function geter(category, mt) {
-  //document.getElementById("demo").innerHTML = "Hello World";
-  console.log('category', category);
+
+  
   console.log('material',JSON.parse(mt))
+    
   let material = JSON.parse(mt)
   
   let notificationList= document.querySelector('#rend')
@@ -223,7 +228,7 @@
   {
 
      document.getElementById('view').style.display = "block";
-
+   
   }
   function tabChange(evt, action) {
       $('#msg').css('display','none')
@@ -238,7 +243,7 @@
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(action).style.display = "block";
-
+    //console.log(evt.currentTarget.textContent )
 
     evt.currentTarget.className += " active";
   }

@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
   let result = await user.findOne({ email: req.body.email }).lean()
   if (result && Object.keys(result).length) {
     if (req.body.password == result.password) {
-      //res.redirect('/dashboard')
+
       res.render('login.ejs', {
         data: {
           success: 'login successfully',
@@ -61,9 +61,6 @@ const loginUser = async (req, res) => {
   }
 }
 
-const updateRole = async (req, res) => {
-  console.log(req.body)
-}
 
 module.exports = {
   createUser,

@@ -18,25 +18,25 @@
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i id="bell" class="fa fa-user-circle icon-size"></i>
       </a>
-      <div class="dropdown-menu" id="drop-down2" aria-labelledby="navbarDropdown">
+      <div class="dropdown-menu" id="drop-down-user" aria-labelledby="navbarDropdown">
      
       </div>
     </li>
-      <!-- <li><a data-text="Logout" href="#" id="logout" >Logout</a></li> -->
   
     </ul>
   </nav>
 
   <script>
     let name = localStorage.getItem('name')
-    let notificationList = document.getElementById('drop-down2')
+    let notificationList = document.getElementById('drop-down-user')
   var   mainDiv = document.createElement('a')
     mainDiv.classList.add('dropdown-item')
   
     markup = ` <span >${name}</span>`
     mainDiv.innerHTML = markup
     notificationList.appendChild(mainDiv)
-     mainDiv = document.createElement('a')
+    
+    mainDiv = document.createElement('a')
     mainDiv.classList.add('dropdown-item')
     mainDiv.href = '/material'
     markup = ` <span id="logout" >Logout</span>`
