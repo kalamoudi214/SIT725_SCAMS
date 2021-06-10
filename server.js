@@ -85,7 +85,7 @@ mongoose.connect(uri, {
   app.get('/material', async (req, res) => {
     let category = await categoryModel.find().lean()
     let material = await materialModel.find().lean()
-  
+
     return res.render('material.ejs', {
       data: { category: category, material: material },
     })
