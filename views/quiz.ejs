@@ -7,7 +7,6 @@
         {
           window.location.href = '/'
         }
-
         
       </script>
               <% if(data.success){
@@ -18,7 +17,6 @@
                 window.location.href = '/quiz'
               },3000)
               </script>
-
               <% } %>
             
  
@@ -26,18 +24,20 @@
 <body>
   <%- include ('./partials/homeNavbar.ejs') %>
 
-   <h1 style="text-align: center; margin:30px 0px"><i>Quiz</i></h1>
+  <h1 style="text-align: center; margin:30px 0px"><i>Quiz</i></h1>
    <div class="text-right mr">
     <button class="tablinks btn btn-secondary" onclick="tabChange(event, 'view')"><b>View Quizes</b></button>
     <button class="tablinks btn btn-info " onclick="tabChange(event, 'score')"><b>Quiz Scores</b></button>
-    <button id="admin" class="tablinks btn btn-success"  data-toggle="modal" data-target="#modalLoginForm" ><b>Add Quiz</b></button>
+    <button id=" admin" class="tablinks btn btn-success"  data-toggle="modal" data-target="#modalLoginForm" ><b>Add Quiz</b></button>
   </div>
 
 <%if(data.success)
 {
     console.log('data',data) %>
     <script>
-      setTimeout(function(){alert('Quiz has been created successfully')},3000)
+      setTimeout(function(){
+        alert('Quiz has been created successfully')
+      },3000)
     </script>
     <!-- <p  style="margin-top: 20px;"  id="msg" class="alert alert-success"><%=data.success%></p> -->
 <% }%>
@@ -45,11 +45,13 @@
 {
     console.log('data',data) %>
     <script>
-      setTimeout(function(){alert('Quiz name already exist')},3000)
+      setTimeout(function(){
+        alert('Quiz name already exist')
+      },3000)
     </script>
     <!-- <p  style="margin-top: 20px;"  id="msg" class="alert alert-danger"><%=data.error%></p> -->
 <% }%>
-
+<div id='score' class="tabcontent">
   <div class="container">
     <table class="table table-striped tbl-class">
       <thead class="middle">
@@ -93,7 +95,7 @@
           <th scope="row"><%= i+1  %></th>
           <td><%= data.quiz[i].name %></td>
           <td><button class="btn btn-warning" type="button" onclick="giveQuiz('<%= data.quiz[i]._id %>')" >Attempt Quiz</button></td>
-          <td id="ad<%= i+1  %>" ><button  onclick="giveQuizId('<%= data.quiz[i]._id %>')" class="btn btn-success" type="button"  data-toggle="modal" data-target="#exampleModal">Add Questions</button></td>
+          <td id="ad<%= i+1  %>" ><button  onclick="giveQuizId('<%= data.quiz[i]._id %>')" class="btn btn-success" style="font:bold ;" type="button"  data-toggle="modal" data-target="#exampleModal">Add questions</button></td>
           <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <form >
@@ -158,10 +160,8 @@
           <script>
             let a = '<%=  data.quiz.length %>'
             var r = localStorage.getItem('role')
-
                 r = r.toLowerCase()
                 if (!r.includes('admin')) {
-
                   for( var i=0;i< a ;i++)
                   {
                     console.log('gfd')
@@ -170,7 +170,6 @@
                       console.log(d.childNodes.length)
                       d.removeChild(d.lastChild)
                   }
-
                 }
             
           </script>
@@ -199,10 +198,6 @@
           <input type="text" name="name" id="defaultForm-email" class="form-control validate">
         </div>
 
-        <div class="md-form mb-4">
-            <label data-error="wrong" data-success="right" for="defaultForm-pass">Quiz type</label>
-          <input type="text" name="type" id="defaultForm-pass" class="form-control validate">
-        </div>
 
         <div class="md-form mb-4">
             <label data-error="wrong" data-success="right" for="defaultForm-pass">Description</label>
@@ -234,34 +229,8 @@
 </div>
 
 
- 
-    
-    <!-- <div class="jumbotron registration-section">
-      <form action="/category/" method="post">
-        <div class="form-group">
-          <label >Name</label>
-          <input type="text" class="form-control" name="name" id="name" 
-            placeholder="Enter department name">
-          
-        </div>
-        <div class="form-group">
-          <label >Description</label>
-          <input  name="description" type="text-area" class="form-control"  placeholder="Enter description">
-        </div>
-        
-        <button type="submit"  class="btn btn-primary">Submit</button>
-     
-      </form>
-
-      
-    </div> -->
-
-
-  
-
   
   <script>
-
 function giveQuiz( quizId)
 {
   
@@ -285,9 +254,7 @@ function giveQuiz( quizId)
    // alert("Data: " + data + "\nStatus: " + status);
   });
 }
-
   function tabChange(evt, action) {
-
       $('#msg').css('display','none')
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -300,7 +267,6 @@ function giveQuiz( quizId)
     }
     document.getElementById(action).style.display = "block";
     evt.currentTarget.className += " active";
-
     if(action === 'score')
     {
       let userId = localStorage.getItem('csams');
@@ -330,28 +296,23 @@ function giveQuiz( quizId)
       <td>${b.total}</td>
       <td>${b.score}</td>
       `
-
       mainDiv.innerHTML = markup;
       list.appendChild(mainDiv)
       
-
     }
  
    
   });
     }
   }
-
   function getQuizData()
   {
-
   }
   $(document).ready(function(){
     initial()
 });
   function initial()
   {
-
      document.getElementById('view').style.display = "block";
 
   }
@@ -384,4 +345,3 @@ function giveQuiz( quizId)
 </body>
 <%- include ('./partials/footer.ejs') %>
 </html>
-

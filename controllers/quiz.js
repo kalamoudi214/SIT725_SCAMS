@@ -11,7 +11,6 @@ const creatQuiz = async (req, res) => {
       let result = await quiz.create({ ...data })
       //res.status(200).json({data: result })
       let cat = await quiz.find().lean()
-     
 
       res.render('quiz.ejs', {
         data: {
@@ -36,7 +35,6 @@ const creatQuiz = async (req, res) => {
   }
 }
 
-// to check userQuiz if he made this Quiz or Not
 const checkUserQuiz = async (req, res) => {
   let { body } = req
   let check = await userQuiz.findOne({

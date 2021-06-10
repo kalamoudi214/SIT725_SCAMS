@@ -17,7 +17,7 @@ let storage = multer.diskStorage({
 upload = multer({ storage: storage })
 let uploadFields = upload.fields([
   { name: 'file', maxCount: 1 },
-  { name: 'file1', maxCount: 8 },
+  { name: 'file1', maxCount: 1 },
 ])
 router.post('/', uploadFields, materialController.createMaterial)
 router.get('/get/:id', materialController.getFile)

@@ -5,4 +5,5 @@ const userController = require("../controllers/category");
 
 router.post("/", userController.createCategory),
 
+
 module.exports = router;
