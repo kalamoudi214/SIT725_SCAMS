@@ -1,0 +1,165 @@
+
+<%- include ('./partials/head.ejs') %>
+<!-- Embedded Javascreipt -->
+<title>Material</title>
+ <!--This script tag is used to maintain session using localstorage-->
+<script>
+    if(!localStorage.getItem('csams'))
+    {
+      window.location.href = '/'
+    }
+
+  </script>
+
+</head>
+<body>
+
+    <div class="jumbotron text-center " id="error">
+      <h1 class="display-3">You have already giver this test</h1>
+      <p class="lead">
+        <a class="btn btn-primary btn-sm" href="/" role="button">Continue to homepage</a>
+      </p>
+    </div>
+  <div class="jumbotron text-center " id="thankyou">
+    <h1 class="display-3">Thank You!</h1>
+    <div id="score">
+   
+  </div>
+    <hr>
+
+    <p class="lead">
+      <a class="btn btn-primary btn-sm" href="/" role="button">Continue to homepage</a>
+    </p>
+  </div>
+<div class="container  "  id="attempt">
+    <h1 class="center">Instruction</h1>
+    <ol class="size">
+        <li>You can only attempt quiz only once</li>
+        <li>You just have 5 minutes to finish the quiz</li>
+        <li>Milk</li>
+      </ol> 
+      
+
+    <div>
+    <button class="btn btn-success "  id="qz" onclick="startQuiz()" >Start Quiz</button>
+</div>
+</div>
+<div id="attempt">
+<div id="questions" >
+<div class="container ">
+  <div id="tm" class="text-right"><h3 id="time">05:00</h3> minutes remaining</div>
+    <form  id="quizForm" method="POST" action="/quizQuestion/check">
+      <input hidden name="quizId" value="<%= data.questions[0].quizId %>">
+      
+    <div class="question mb-10 ">
+    
+  <% if(data.questions)
+  { 
+
+    for(var i=0 ; i< data.questions.length; i++)
+    { %>
+        <div class=" h5"><b><%= [i+1] %>) <%= data.questions[i].statement %></b></div>
+      
+             <label class="options"><%= data.questions[i].option[0] %><input onchange="change($event)" value="<%= data.questions[i].option[0]%>|<%= data.questions[i]._id  %>" type="radio" name="<%= [i+1] %>"> <span class="checkmark"></span> </label> 
+   <br/> <label class="options"><%= data.questions[i].option[1] %> <input type="radio" value="<%= data.questions[i].option[1] %>|<%= data.questions[i]._id %>"  name="<%= [i+1] %>"> <span class="checkmark"></span> </label> 
+   <br/>        <label class="options"><%= data.questions[i].option[2] %><input type="radio" value="<%= data.questions[i].option[2] %>|<%= data.questions[i]._id %>"   name="<%= [i+1] %>"> <span class="checkmark"></span> </label> 
+           <br>  <label class="options"><%= data.questions[i].option[3] %><input type="radio" value="<%= data.questions[i].option[3] %>|<%= data.questions[i]._id %>"   name="<%= [i+1] %>"> <span class="checkmark"></span> </label> 
+            
+    
+  <% }} %>
+  </div>
+
+  <button class="btn btn-success text-center" type="submit">Submit Test</button>
+  </form>
+
+
+</div>
+
+
+</div>
+</div>
+
+
+
+<script>
+        let userId = localStorage.getItem('csams')
+    let mainDiv = document.createElement('div')
+    var quizFrm = document.getElementById('quizForm');
+    markup = `<input name="userId" value='${userId}' hidden  >`
+    mainDiv.innerHTML = markup
+    quizFrm.appendChild(mainDiv)
+
+    function startQuiz()
+    {
+        console.log('called')
+        
+        document.getElementById('questions').style.display = "block";
+        document.getElementById('qz').style.display="none"
+        tim()
+    }
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+        console.log('minutes : ',minutes, 'seconds : ',seconds )
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+// window.onload = function () {
+ function tim() {
+    var fiveMinutes = 60 * 5,
+        display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+};
+</script>
+<%  if(data.success)
+{ %>
+
+  <script>
+    
+    document.getElementById('attempt').style.display = 'none'
+    document.getElementById('questions').style.display = 'none'
+    document.getElementById('thankyou').style.display = 'block'
+  
+      let score = document.getElementById('score');
+    let newElement = document.createElement('div')
+    let st  = ` <p class="lead"> You have scored <strong><%= data.success.score%></strong> out of <strong><%= data.success.total%></strong> </p>`
+    newElement.innerHTML = st
+    score.appendChild(newElement)
+    setTimeout(function(){
+      window.location.href = '/'
+    },5000)
+
+   
+  </script>
+
+<% }
+if(data.error)
+{ %>
+<script>
+    document.getElementById('attempt').style.display = 'none'
+    document.getElementById('tm').style.display = 'none'
+  document.getElementById('error').style.display = 'block'
+setTimeout(function(){
+
+  window.location.href = '/'
+},5000)
+</script>
+
+<% }
+
+%>
+</body>
+<%- include ('./partials/footer.ejs') %>
+</html>
+
+

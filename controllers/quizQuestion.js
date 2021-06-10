@@ -52,6 +52,8 @@ const createQuestion = async (req, res) => {
   }
 }
 
+
+//to get Question based on quiz id
 const fetchQuizQuestion = async (req, res) => {
   try {
     let { params } = req
