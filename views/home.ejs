@@ -1,0 +1,111 @@
+<%- include ('./partials/head.ejs') %>
+    <!-- Embedded Javascreipt -->
+    <title>Dashboard</title>
+   <!--This script tag is used to maintain session using localstorage-->
+    <script>
+      if(!localStorage.getItem('csams'))
+      {
+        window.location.href = '/'
+      }
+    </script>
+</head>
+<body>
+  <%- include ('./partials/homeNavbar.ejs') %>
+
+  <div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1><i>Dashboard</i></h1>
+        </div>
+    </div>
+  </div>
+
+
+<div id="member" class="container ">
+  <h2 class="mt mb">Your Quiz Graph</h2>
+  <div class="row">
+    <div class="coll-lg-2 col-md-2"></div>
+    <div class="col-lg-8 col-md-8">
+      <div id="memberUser"></div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+     let role = localStorage.getItem('role');
+
+    let userId = localStorage.getItem('csams');
+    $.post("/quizQuestion/getQuizByuser", {userId: userId}, function(data, status){
+    document.getElementById('member').style.display='block';
+    console.log(data.data)
+
+    console.log((data.data));
+      let scores = data.data.map(e => e.average);
+
+    let name = data.data.map(e => e.quizCategory)
+
+    
+    ////////////
+   
+
+    console.log(document.getElementsByName('canvas')  )
+    var ctx = document.getElementById('memberUser');
+    if(ctx.childNodes.length >0)
+    {
+      while(ctx.firstChild){
+      ctx.removeChild(ctx.firstChild)
+    }
+    }
+    let allData = document.createElement('canvas'); 
+var myChart = new Chart(allData, {
+    type: 'bar',
+    data: {
+        labels: name,
+        datasets: [{
+            label: 'Average score',
+            data: scores,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100
+            }
+        }
+    }
+});
+
+
+ctx.appendChild(allData)
+  
+  return 0
+  
+ 
+});
+
+
+</script>
+
+</body>
+<%- include ('./partials/footer.ejs') %>
+</html>
+
